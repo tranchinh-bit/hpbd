@@ -15,14 +15,20 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+            overflow-x: hidden;   /* Không tràn ngang */
+        }
+
         body {
             font-family: 'Quicksand', sans-serif;
             color: #ffffff;
             min-height: 100vh;
-            overflow-x: hidden;
+            position: relative;
+            background-color: #000; /* nền dự phòng phía sau */
         }
 
-        /* Background bình minh */
+        /* Background bình minh ở biển */
         body::before {
             content: "";
             position: fixed;
@@ -41,10 +47,10 @@
             z-index: -1;
         }
 
-        /* Container thư */
+        /* Khung thư */
         .container {
             max-width: 900px;
-            margin: 40px auto 180px;
+            margin: 40px auto 150px;   /* chừa chỗ cho sóng, không cần kéo xuống quá */
             padding: 24px 20px 32px;
             background: rgba(0, 0, 0, 0.45);
             border-radius: 18px;
@@ -86,7 +92,6 @@
             opacity: 0.95;
         }
 
-        /* QR */
         .qr-section {
             margin-top: 28px;
             padding-top: 18px;
@@ -106,23 +111,23 @@
             word-break: break-all;
         }
 
-        /* Sóng biển dưới chân trang */
+        /* Sóng biển dưới chân trang – phủ hết đáy, không lộ viền */
         .sea-waves {
             position: fixed;
             left: 0;
+            right: 0;
             bottom: 0;
-            width: 100%;
             height: 170px;
             background: url("https://i.imgur.com/4NJl1Ft.gif") bottom center / cover no-repeat;
-            opacity: 0.95;
+            opacity: 0.96;
             pointer-events: none;
             z-index: 5;
         }
 
-        /* Nút nhạc */
+        /* Nút bật/tắt nhạc */
         .music-btn {
             position: fixed;
-            bottom: 190px;
+            bottom: 185px;
             right: 20px;
             background: rgba(0,0,0,0.55);
             color: #fff;
@@ -136,16 +141,16 @@
             transition: 0.2s;
         }
         .music-btn:hover {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
         }
 
         @media (max-width: 600px) {
             .container {
-                margin: 16px;
+                margin: 16px 12px 140px;
                 padding: 18px 14px 24px;
             }
             h1 { font-size: 1.7rem; }
-            .music-btn { bottom: 185px; }
+            .music-btn { bottom: 175px; right: 14px; }
         }
     </style>
 </head>
@@ -157,9 +162,9 @@
     <!-- Nút nhạc -->
     <button class="music-btn" id="musicBtn">▶ Bật nhạc</button>
 
-    <!-- Nhạc nền -->
+    <!-- Nhạc nền (đã đổi sang link chạy được) -->
     <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/y16gya.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7b3d7631b3.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Sóng biển -->
@@ -210,6 +215,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <script>
+        // QR trỏ về chính URL hiện tại
         var pageUrl = window.location.href;
         document.getElementById("url-text").textContent = pageUrl;
 
@@ -219,32 +225,28 @@
             height: 190
         });
 
-      // Nhạc nền
-const music = document.getElementById("bgMusic");
-const btn = document.getElementById("musicBtn");
-let playing = false;
+        // Nhạc nền: play/pause an toàn, không lỗi AbortError
+        const music = document.getElementById("bgMusic");
+        const btn = document.getElementById("musicBtn");
+        let playing = false;
 
-btn.onclick = () => {
-    if (!playing) {
-        // Nhấn bật nhạc
-        music.play()
-            .then(() => {
-                // Khi play thành công
-                playing = true;
-                btn.textContent = "⏸ Tắt nhạc";
-            })
-            .catch((error) => {
-                console.warn("Trình duyệt chặn phát nhạc:", error);
-                alert("Nhạc bị chặn bởi trình duyệt. Hãy nhấn nút lần nữa.");
-            });
-    } else {
-        // Nhấn tắt nhạc
-        music.pause();
-        playing = false;
-        btn.textContent = "▶ Bật nhạc";
-    }
-};
-
+        btn.onclick = () => {
+            if (!playing) {
+                music.play()
+                    .then(() => {
+                        playing = true;
+                        btn.textContent = "⏸ Tắt nhạc";
+                    })
+                    .catch((error) => {
+                        console.warn("Trình duyệt chặn phát nhạc:", error);
+                        alert("Nếu nhạc chưa phát, hãy nhấn nút thêm lần nữa nhé.");
+                    });
+            } else {
+                music.pause();
+                playing = false;
+                btn.textContent = "▶ Bật nhạc";
+            }
+        };
     </script>
 
 </body>
