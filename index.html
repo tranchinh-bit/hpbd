@@ -17,7 +17,7 @@
 
         html, body {
             height: 100%;
-            overflow-x: hidden;   /* Không tràn ngang */
+            overflow-x: hidden;
         }
 
         body {
@@ -25,7 +25,7 @@
             color: #ffffff;
             min-height: 100vh;
             position: relative;
-            background-color: #000; /* nền dự phòng phía sau */
+            background-color: #000;
         }
 
         /* Background bình minh ở biển */
@@ -50,7 +50,7 @@
         /* Khung thư */
         .container {
             max-width: 900px;
-            margin: 40px auto 150px;   /* chừa chỗ cho sóng, không cần kéo xuống quá */
+            margin: 40px auto 150px;  /* chừa chỗ cho sóng phía dưới */
             padding: 24px 20px 32px;
             background: rgba(0, 0, 0, 0.45);
             border-radius: 18px;
@@ -111,17 +111,43 @@
             word-break: break-all;
         }
 
-        /* Sóng biển dưới chân trang – phủ hết đáy, không lộ viền */
+        /* Sóng biển dưới chân trang – thuần CSS, không dùng ảnh */
         .sea-waves {
             position: fixed;
             left: 0;
             right: 0;
             bottom: 0;
             height: 170px;
-            background: url("https://i.imgur.com/4NJl1Ft.gif") bottom center / cover no-repeat;
-            opacity: 0.96;
+            overflow: hidden;
             pointer-events: none;
             z-index: 5;
+        }
+
+        .sea-waves::before,
+        .sea-waves::after {
+            content: "";
+            position: absolute;
+            left: -20%;
+            right: -20%;
+            bottom: -40px;
+            height: 200px;
+            background:
+                radial-gradient(circle at 20% 40%, rgba(255,255,255,0.7) 0, transparent 60%),
+                radial-gradient(circle at 70% 20%, rgba(255,255,255,0.5) 0, transparent 55%),
+                linear-gradient(to top, rgba(0,0,30,0.9), rgba(0,40,80,0.85), transparent 70%);
+            opacity: 0.95;
+            animation: waveMove 10s linear infinite;
+        }
+
+        .sea-waves::after {
+            opacity: 0.7;
+            animation-duration: 14s;
+            animation-direction: alternate;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(80px); }
         }
 
         /* Nút bật/tắt nhạc */
@@ -144,13 +170,15 @@
             background: rgba(0,0,0,0.75);
         }
 
-        @media (max-width: 600px) {
+        /* Ẩn QR trên màn hình nhỏ (điện thoại) */
+        @media (max-width: 768px) {
             .container {
                 margin: 16px 12px 140px;
                 padding: 18px 14px 24px;
             }
             h1 { font-size: 1.7rem; }
             .music-btn { bottom: 175px; right: 14px; }
+            .qr-section { display: none; }  /* <- không hiện QR trên mobile */
         }
     </style>
 </head>
@@ -162,9 +190,9 @@
     <!-- Nút nhạc -->
     <button class="music-btn" id="musicBtn">▶ Bật nhạc</button>
 
-    <!-- Nhạc nền (đã đổi sang link chạy được) -->
+    <!-- Nhạc nền -->
     <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7b3d7631b3.mp3" type="audio/mpeg">
+        <source src="https://pixabay.com/vi/users/backgroundmusicforvideo-46826676/" type="audio/mpeg">
     </audio>
 
     <!-- Sóng biển -->
@@ -217,15 +245,19 @@
     <script>
         // QR trỏ về chính URL hiện tại
         var pageUrl = window.location.href;
-        document.getElementById("url-text").textContent = pageUrl;
+        var urlBox = document.getElementById("url-text");
+        if (urlBox) urlBox.textContent = pageUrl;
 
-        new QRCode(document.getElementById("qrcode"), {
-            text: pageUrl,
-            width: 190,
-            height: 190
-        });
+        var qrBox = document.getElementById("qrcode");
+        if (qrBox) {
+            new QRCode(qrBox, {
+                text: pageUrl,
+                width: 190,
+                height: 190
+            });
+        }
 
-        // Nhạc nền: play/pause an toàn, không lỗi AbortError
+        // Nhạc nền: play/pause an toàn
         const music = document.getElementById("bgMusic");
         const btn = document.getElementById("musicBtn");
         let playing = false;
