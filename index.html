@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Happy Birthday Nga 🎂</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background bình minh */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e")
+                        center center / cover no-repeat fixed;
+            filter: blur(1.5px) brightness(0.85);
+            transform: scale(1.05);
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: -1;
+        }
+
+        /* Container thư */
+        .container {
+            max-width: 900px;
+            margin: 40px auto 180px;
+            padding: 24px 20px 32px;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 18px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 6px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            opacity: 0.9;
+        }
+
+        .message {
+            line-height: 1.7;
+            font-size: 1.05rem;
+            white-space: pre-line;
+        }
+
+        .message p {
+            margin-bottom: 14px;
+        }
+
+        .signature {
+            margin-top: 18px;
+            text-align: right;
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* QR */
+        .qr-section {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            text-align: center;
+        }
+
+        #qrcode {
+            margin: 0 auto 8px;
+            width: 190px;
+            height: 190px;
+        }
+
+        #url-text {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            word-break: break-all;
+        }
+
+        /* Sóng biển dưới chân trang */
+        .sea-waves {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 170px;
+            background: url("https://i.imgur.com/4NJl1Ft.gif") bottom center / cover no-repeat;
+            opacity: 0.95;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Nút nhạc */
+        .music-btn {
+            position: fixed;
+            bottom: 190px;
+            right: 20px;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            transition: 0.2s;
+        }
+        .music-btn:hover {
+            background: rgba(0,0,0,0.7);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 16px;
+                padding: 18px 14px 24px;
+            }
+            h1 { font-size: 1.7rem; }
+            .music-btn { bottom: 185px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <!-- Nút nhạc -->
+    <button class="music-btn" id="musicBtn">▶ Bật nhạc</button>
+
+    <!-- Nhạc nền -->
+    <audio id="bgMusic" loop>
+        <source src="https://files.catbox.moe/y16gya.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Sóng biển -->
+    <div class="sea-waves"></div>
+
+    <div class="container">
+        <h1>Happy Birthday Nga 🎂</h1>
+        <div class="subtitle">
+            Chúc Nga tuổi mới thật xinh đẹp, hạnh phúc và luôn là cô gái xứng đáng được yêu thương.
+        </div>
+
+        <div class="message">
+
+<p>Happy birth day</p>
+
+<p>Chúc mừng sinh nhật Nga nha, chúc Nga tuổi mới xinh đẹp – thật hạnh phúc – ngày nào cũng là ngày vui – con đường sự nghiệp rộng mở.</p>
+
+<p>Thông qua dịp quan trọng này Chính có vài điều muốn tâm sự với Nga. Cảm ơn Nga đã từng bước vào cuộc sống của Chính, đã yêu thương Chính nhiều, từng xem là của nhau. Nhưng Chính lại đáp trả những điều tốt đẹp đó bằng những sự dối trá, lỗi lầm với Nga. Tất cả những chuyện xảy ra giữa 2 ta toàn bộ đều là lỗi Chính và Chính đã trốn chạy.</p>
+
+<p>Từ lúc Chính tĩnh ngộ và tịnh tâm nhìn lại bản thân mình, Chính cảm thấy tội lỗi – nhục nhã về những việc mình đã gây ra, và người đã chịu đựng những tội lỗi Chính tạo ra lại là Nga – “người con gái hiền lành – yêu hết mình – thiệt thòi, buồn tủi cũng không nói ra”.</p>
+
+<p>Hmmm… khi Chính nhìn lại bản thân mình ngày xưa, Chính phải thốt rằng: “Ồ, mày đó à Chính? Phải mày không vậy? Sao mày có thể làm vậy? Mày đã cảm thấy thế nào khi mày làm vậy?”.</p>
+
+<p>Chắc Nga cũng biết và nhận thấy những việc Chính ngày xưa đã làm. Chính phải tự đặt tên gọi bản thân mình ngày xưa là “Thằn ngáo ngơ”, thằn đấy đã bỏ rơi Nga – làm tổn thương Nga rất nhiều và không thể nào chữa lành được vết thương đó.</p>
+
+<p>Chính không mong là Nga sẽ tha thứ cho Chính, vì Chính còn chẳng thể tha thứ cho mình nữa mà sao lại mong Nga tha thứ. Nhưng Chính cũng mong sau những điều Chính chia sẻ về sự tỉnh thức của mình thì có thể vơi đi một phần nhỏ nào đó những tổn thương mà Chính đã gây ra cho Nga.</p>
+
+<p>Cuối cùng hôm nay Chính cũng có cơ hội bộc lộ tất cả. Hôm nay mà không nói thì Chính cũng không biết mình còn cơ hội không, và nó sẽ cứ bám víu dằn vặt Chính.</p>
+
+<p>Lời cuối cùng là Chính cầu chúc Nga luôn luôn hạnh phúc bên người đi cùng Nga suốt con đường dài sau này, vì Nga rất xứng đáng nhận được điều đó.</p>
+
+<p>Hạnh phúc nha… Em 😇😇</p>
+
+        </div>
+
+        <div class="signature">
+            – Chính –
+        </div>
+
+        <div class="qr-section">
+            <p>Quét mã QR để mở lại trang này 💌</p>
+            <div id="qrcode"></div>
+            <div id="url-text"></div>
+        </div>
+    </div>
+
+    <!-- QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        var pageUrl = window.location.href;
+        document.getElementById("url-text").textContent = pageUrl;
+
+        new QRCode(document.getElementById("qrcode"), {
+            text: pageUrl,
+            width: 190,
+            height: 190
+        });
+
+      // Nhạc nền
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+let playing = false;
+
+btn.onclick = () => {
+    if (!playing) {
+        // Nhấn bật nhạc
+        music.play()
+            .then(() => {
+                // Khi play thành công
+                playing = true;
+                btn.textContent = "⏸ Tắt nhạc";
+            })
+            .catch((error) => {
+                console.warn("Trình duyệt chặn phát nhạc:", error);
+                alert("Nhạc bị chặn bởi trình duyệt. Hãy nhấn nút lần nữa.");
+            });
+    } else {
+        // Nhấn tắt nhạc
+        music.pause();
+        playing = false;
+        btn.textContent = "▶ Bật nhạc";
+    }
+};
+
+    </script>
+
+</body>
+</html>
