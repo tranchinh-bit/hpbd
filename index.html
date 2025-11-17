@@ -37,20 +37,55 @@
                         center center / cover no-repeat fixed;
             filter: blur(1.5px) brightness(0.85);
             transform: scale(1.05);
-            z-index: -2;
+            z-index: -3;
         }
 
+        /* Lớp phủ tối */
         .overlay {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.35);
+            z-index: -2;
+        }
+
+        /* Hiệu ứng background (ánh sáng chuyển động nhẹ) */
+        .bg-effect {
+            position: fixed;
+            inset: -20%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 200, 150, 0.45), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(150, 200, 255, 0.35), transparent 60%);
+            mix-blend-mode: screen;
+            opacity: 0.5;
+            animation: floatGlow 18s ease-in-out infinite alternate;
             z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes floatGlow {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+                opacity: 0.45;
+            }
+            50% {
+                transform: translate3d(-20px, -10px, 0) scale(1.05);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate3d(20px, 15px, 0) scale(1.03);
+                opacity: 0.5;
+            }
         }
 
         /* Khung thư */
+        .page-wrap {
+            min-height: 100vh;
+            padding: 32px 16px 32px;
+        }
+
         .container {
             max-width: 900px;
-            margin: 40px auto 40px;  /* không chừa khoảng cho sóng nữa */
+            margin: 0 auto;
             padding: 24px 20px 32px;
             background: rgba(0, 0, 0, 0.45);
             border-radius: 18px;
@@ -111,35 +146,16 @@
             word-break: break-all;
         }
 
-        /* Nút bật/tắt nhạc */
-        .music-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.55);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.4);
-            padding: 10px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            backdrop-filter: blur(4px);
-            z-index: 20;
-            transition: 0.2s;
-        }
-        .music-btn:hover {
-            background: rgba(0,0,0,0.75);
-        }
-
         /* Ẩn QR trên màn hình nhỏ (điện thoại) */
         @media (max-width: 768px) {
+            .page-wrap {
+                padding: 16px 10px 16px;
+            }
             .container {
-                margin: 16px 12px 16px;
                 padding: 18px 14px 24px;
             }
             h1 { font-size: 1.7rem; }
-            .music-btn { bottom: 16px; right: 14px; }
-            .qr-section { display: none; }  /* không hiện QR trên mobile */
+            .qr-section { display: none; }
         }
     </style>
 </head>
@@ -147,22 +163,16 @@
 <body>
 
     <div class="overlay"></div>
+    <div class="bg-effect"></div>
 
-    <!-- Nút nhạc -->
-    <button class="music-btn" id="musicBtn">▶ Bật nhạc</button>
+    <div class="page-wrap">
+        <div class="container">
+            <h1>Happy Birthday Nga 🎂</h1>
+            <div class="subtitle">
+                Chúc Nga tuổi mới thật xinh đẹp, hạnh phúc và luôn là cô gái xứng đáng được yêu thương.
+            </div>
 
-    <!-- Nhạc nền – dùng trực tiếp link file MP3 -->
-    <audio id="bgMusic" loop>
-        <source src="https://zingmp3.vn/bai-hat/Calm-piano-classical-music-HAPPY-BIRTHDAY-TO-YOU-SONG/Z7967DZA.html" type="audio/mpeg">
-    </audio>
-
-    <div class="container">
-        <h1>Happy Birthday Nga 🎂</h1>
-        <div class="subtitle">
-            Chúc Nga tuổi mới thật xinh đẹp, hạnh phúc và luôn là cô gái xứng đáng được yêu thương.
-        </div>
-
-        <div class="message">
+            <div class="message">
 
 <p>Happy birth day</p>
 
@@ -184,16 +194,17 @@
 
 <p>Hạnh phúc nha… Em 😇😇</p>
 
-        </div>
+            </div>
 
-        <div class="signature">
-            – Chính –
-        </div>
+            <div class="signature">
+                – Chính –
+            </div>
 
-        <div class="qr-section">
-            <p>Quét mã QR để mở lại trang này 💌</p>
-            <div id="qrcode"></div>
-            <div id="url-text"></div>
+            <div class="qr-section">
+                <p>Quét mã QR để mở lại trang này 💌</p>
+                <div id="qrcode"></div>
+                <div id="url-text"></div>
+            </div>
         </div>
     </div>
 
@@ -214,29 +225,6 @@
                 height: 190
             });
         }
-
-        // Nhạc nền: play/pause an toàn
-        const music = document.getElementById("bgMusic");
-        const btn = document.getElementById("musicBtn");
-        let playing = false;
-
-        btn.onclick = () => {
-            if (!playing) {
-                music.play()
-                    .then(() => {
-                        playing = true;
-                        btn.textContent = "⏸ Tắt nhạc";
-                    })
-                    .catch((error) => {
-                        console.warn("Trình duyệt chặn phát nhạc:", error);
-                        alert("Nếu nhạc chưa phát, hãy nhấn nút thêm lần nữa nhé.");
-                    });
-            } else {
-                music.pause();
-                playing = false;
-                btn.textContent = "▶ Bật nhạc";
-            }
-        };
     </script>
 
 </body>
